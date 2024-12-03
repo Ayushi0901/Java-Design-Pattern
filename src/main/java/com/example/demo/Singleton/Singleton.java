@@ -8,23 +8,25 @@ public class Singleton {
 
     }
 
-    private static Singleton uniqueDemoApp;
+    private static volatile Singleton singleton;
 
     public static Singleton getInstance() {
-        if (uniqueDemoApp == null) {
-            uniqueDemoApp = new Singleton();
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
         }
-        return uniqueDemoApp;
+        return singleton;
     }
 
-    public void showMessage() {
-        System.out.println("Hello from Singleton!");
+    public void showMsg() {
+        System.out.println("this is singleton thread class");
     }
 
     public static void main(String[] args) {
-//        SpringApplication.run(DemoApplication.class, args);
-        Singleton singleton = new Singleton();
-        singleton.showMessage();
+        Singleton singleton1 = new Singleton();
+        singleton1.showMsg();
     }
-
 }
